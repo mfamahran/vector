@@ -3,7 +3,8 @@
 use std::collections::HashSet;
 
 use snafu::Snafu;
-
+#[cfg(feature = "transforms-metric_metadata")]
+pub mod metric_metadata;
 #[cfg(feature = "transforms-aggregate")]
 pub mod aggregate;
 #[cfg(feature = "transforms-aws_ec2_metadata")]
