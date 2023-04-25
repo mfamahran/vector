@@ -6,8 +6,8 @@ use chrono::Utc;
 
 use crate::{
     config::{
-        DataType, Input, OutputId, TransformConfig, TransformContext,
-        TransformOutput,
+        DataType, Input, TransformConfig, TransformContext,
+        Output,
     },
     event::{
         metric::{Metric, MetricKind, MetricValue, MetricTags},
@@ -50,13 +50,8 @@ impl TransformConfig for MetricsMetadataConfig {
         Input::log()
     }
 
-    fn outputs(
-        &self,
-        _: &[(OutputId, schema::Definition)],
-        _: LogNamespace,
-    ) -> Vec<TransformOutput> {
-        // Converting the log to a metric means we lose all incoming `Definition`s.
-        vec![TransformOutput::new(DataType::Metric, Vec::new())]
+    fn outputs(&self, _: &schema::Definition, _: LogNamespace) -> Vec<Output> {
+        vec![Output::default(DataType::Metric)]
     }
 
     fn enable_concurrency(&self) -> bool {
