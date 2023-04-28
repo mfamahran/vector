@@ -97,7 +97,7 @@ fn to_metric(event: &Event) -> Result<Metric, TransformError> {
         }    
     }
     let tags_result = Some(tags.clone());
-    let kind = match log.get("kind").unwrap().to_string().as_str() {
+    let kind = match log.get("kind").unwrap().to_string().as_str().trim_matches(|c| c == '\"') {
         "absolute" =>  MetricKind::Absolute,
         "incremental" => MetricKind::Incremental,
         _ => MetricKind::Absolute
